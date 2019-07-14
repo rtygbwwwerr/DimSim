@@ -323,7 +323,7 @@ class Pinyin:
         import re
         yVowels = {"u","ue","uan","un","u:","u:e","u:an","u:n"}
         tconsonant = {"j","g","x"}
-        if 'v' in self.vowel:
+        if self.vowel is not None and 'v' in self.vowel:
             self.vowel = self.vowel.replace("v", "u:")
             
         if self.consonant is None or self.consonant is "":
