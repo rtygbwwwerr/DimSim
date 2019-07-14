@@ -3,6 +3,7 @@
 
 from dimsim import get_distance, getCandidates
 from dtw import dtw
+import math
 import matplotlib.pyplot as plt
 
 
@@ -22,7 +23,14 @@ def get_sentence_distance(s1, s2, max_loc_dis=10.0):
     #use DTW algorithm for computing sequence distance
     dist, cost_matrix, acc_cost_matrix, path = dtw(s1, s2, dist=phonetic_norm, warp=1)
     #normalize distance with minimum matching length
-    dist = dist / (match_len * 2) 
+#     match_score = 0
+#     norm_score = 0
+#     for i, j in zip(path[0], path[1]):
+#         norm_score += math.exp(cost_matrix[i, j])
+#         if cost_matrix[i, j] < max_loc_dis:
+#             match_score += math.exp(cost_matrix[i, j])
+#     smiliarty = match_score / norm_score
+    dist = dist / (match_len * 2)
 #     plt.imshow(acc_cost_matrix.T, origin='lower', cmap='Blues', interpolation='nearest')
 #     plt.plot(path[0], path[1], 'w')
 #     plt.show()

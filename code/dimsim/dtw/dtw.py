@@ -30,6 +30,8 @@ def dtw(x, y, dist, warp=1, w=inf, s=1.0):
         D0[0, 1:] = inf
         D0[1:, 0] = inf
     D1 = D0[1:, 1:]  # view
+    #D0:cost(t-1)
+    #D1:cist(t)
     for i in range(r):
         for j in range(c):
             if (isinf(w) or (max(0, i - w) <= j <= min(c, i + w))):
@@ -40,11 +42,15 @@ def dtw(x, y, dist, warp=1, w=inf, s=1.0):
         if not isinf(w):
             jrange = range(max(0, i - w), min(c, i + w + 1))
         for j in jrange:
+            #D0[i, j]:cost[i-1, j-1]
+            #D0[i_k, j]:cost[i, j-1]
+            #D0[i, j_k]:cost[i-1, j]
             min_list = [D0[i, j]]
             for k in range(1, warp + 1):
                 i_k = min(i + k, r)
                 j_k = min(j + k, c)
                 min_list += [D0[i_k, j] * s, D0[i, j_k] * s]
+            #cost[i, j]=d[i, j] + min(cost[i-1, j-1], cost[i, j-1], cost[i-1, j])
             D1[i, j] += min(min_list)
     if len(x) == 1:
         path = zeros(len(y)), range(len(y))
